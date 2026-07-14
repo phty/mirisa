@@ -1,0 +1,54 @@
+Construye una aplicación web MÓVIL-FIRST llamada "Simulador MIR 2026", un simulador de examen tipo test para la preparación del MIR (examen de médico residente en España). Usa React + Tailwind + shadcn/ui, con diseño limpio, profesional y accesible, y modo claro/oscuro.
+
+DATOS
+Las preguntas se cargarán desde un archivo JSON en /preguntas.json (haz fetch al arrancar). De momento incluye 3-4 preguntas de ejemplo con esta MISMA estructura para poder desarrollar; luego yo sustituiré el archivo por el real con 500 preguntas. Cada pregunta es un objeto:
+{
+  "especialidad": "Cardiología",
+  "tema": "Insuficiencia cardiaca",
+  "dificultad": "fácil | media | difícil",
+  "enunciado": "caso clínico + pregunta final",
+  "opciones": ["texto A", "texto B", "texto C", "texto D"],
+  "correcta": 1,          // índice 0-3 de la opción correcta
+  "explicacion": "por qué es correcta y por qué fallan las otras",
+  "perla": "regla o dato clave de alto rendimiento"
+}
+
+PANTALLA DE INICIO
+- Título y breve descripción. Muestra nº total de preguntas y nº de especialidades.
+- Selección de MODO:
+  1) Simulacro oficial: 200 preguntas aleatorias con cronómetro (por defecto 240 min), corrección al final.
+  2) Examen completo: todas las preguntas en orden.
+  3) Por especialidad: elegir una o varias especialidades (chips seleccionables).
+  4) Personalizado: nº de preguntas, dificultad (chips fácil/media/difícil), especialidades, cronómetro on/off, y "modo estudio".
+- Ajustes: barajar preguntas (on/off) y "modo estudio" = corrección y explicación inmediatas tras responder.
+
+PANTALLA DE EXAMEN
+- Cabecera: contador (n/total), barra de progreso, cronómetro (si aplica) que se pone en rojo en los últimos 5 min, botón "Finalizar".
+- Tarjeta de pregunta con etiquetas: especialidad, dificultad (color), tema.
+- 4 opciones grandes (A-D) seleccionables con el dedo; permite marcar/desmarcar y dejar en blanco.
+- En "modo estudio": al responder, bloquea la pregunta y muestra si es correcta, resalta la correcta en verde y la elegida errónea en rojo, con la explicación y la "perla".
+- Navegación: Anterior / Siguiente, botón "Marcar para revisar", "Borrar respuesta".
+- Rejilla/paleta de navegación para saltar a cualquier pregunta, con estados: respondida, sin responder, marcada, actual.
+- Atajos de teclado en escritorio: 1-4 responder, flechas navegar, M marcar, F finalizar.
+
+CORRECCIÓN (FÓRMULA OFICIAL MIR)
+- Netas = aciertos − (fallos / 3). Las preguntas en blanco no restan.
+- Muestra: aciertos, fallos, en blanco, netas (2 decimales) y % de aciertos en un anillo de progreso.
+- Un breve veredicto según el porcentaje de netas.
+
+RESULTADOS
+- Tabla de rendimiento POR ESPECIALIDAD (aciertos/total, barra, %).
+- Tabla de rendimiento POR DIFICULTAD.
+- Botones: "Revisar todas", "Repasar solo falladas", "Nuevo test con las falladas", "Nuevo examen".
+
+REVISIÓN
+- Lista de preguntas con: tu respuesta vs la correcta (resaltadas), explicación y perla.
+- Filtros: todas / falladas / acertadas / en blanco, y por especialidad. Buscador de texto.
+
+TÉCNICO
+- Móvil-first: botones cómodos para el pulgar, sin scroll horizontal, tablas con scroll propio, tipografía legible.
+- Guarda el examen en curso y permite retomarlo (localStorage por ahora).
+- Modo oscuro respetando la preferencia del sistema, con botón para alternar.
+- Incluye un aviso visible: "Herramienta de estudio generada con IA; verifica siempre en fuentes oficiales; no sustituye a los temarios ni es consejo médico."
+
+Empieza generando esta app con datos de ejemplo. Después te indicaré cómo cargar el JSON real de 500 preguntas.
